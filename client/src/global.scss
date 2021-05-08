@@ -1,0 +1,26 @@
+:root {
+  --magenta_void: #441218;
+  --magenta_med: #BD242D;
+  --magenta_light: #DB5A62;
+  --magenta_dark: #8B1C23;
+  --green_light: #C8E55E;
+  --green_med: #A3C526;
+  --green_dark: #718D0A;
+  --green_void: #394800;
+  --whiteplum: #E4D5D9;
+  --gray_lesssubtle: #4F4F4F;
+  --gray_subtle: #313131;
+  --lelele: #1E1E1E;
+}
+
+body {
+  background-color: var(--lelele);
+  font-family: sans-serif;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}

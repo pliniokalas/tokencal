@@ -1,0 +1,131 @@
+.hero {
+  font-size: 4rem;
+  font-family: serif;
+  text-align: center;
+  color: var(--green_med);
+
+  animation: fadeInFromAbove 800ms ease forwards;
+}
+
+.authForm {
+  display: grid;
+  grid-template: min-content / min-content max-content;
+  gap: 0.5rem;
+
+  width: max-content;
+  padding: 1rem;
+  margin: 0 auto;
+  border: 1px solid var(--gray_subtle);
+  border-radius: 2px;
+
+  color: var(--whiteplum);
+
+  animation: fadeInFromBelow 500ms ease forwards;
+
+  .error {
+    position: absolute;
+    z-index: 10;
+    top: -2rem;
+
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0;
+    box-sizing: border-box;
+
+    background-color: var(--magenta_med);
+    border-radius: 2px;
+    text-align: center;
+    color: var(--lelele);
+
+    animation: fadeIn 200ms ease forwards;
+  }
+
+  label {
+    padding: 0.5rem;
+    border: 2px solid var(--magenta_med);
+    border-radius: 5px;
+    text-align: center;
+
+    animation: fadeInFromBelow 500ms ease forwards;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 2px;
+    font-size: 1rem;
+    max-width: 30vw;
+
+    background-color: var(--gray_subtle);
+    color: var(--whiteplum);
+
+    animation: fadeInFromBelow 500ms ease forwards;
+
+    &:invalid {
+      // add some icon
+      background-color: var(--magenta_med);
+    }
+  }
+
+  button {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 2px;
+    font-size: 1rem;
+
+    background-color: var(--green_light);
+    color: var(--green_void);
+
+    &:hover {
+      background-color: var(--green_med);
+    }
+  }
+}
+
+.authHint {
+  width: 100%;
+  text-align: center;
+  color: var(--gray_lesssubtle);
+
+  opacity: 0;
+  animation: fadeInFromBelow 500ms ease forwards 200ms;
+
+  button {
+    color: var(--green_light);
+    font-size: 1rem;
+
+    &:hover {
+      color: var(--green_med);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInFromAbove {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInFromBelow {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

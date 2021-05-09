@@ -1,0 +1,82 @@
+.sideBar {
+  padding: 0 1rem;
+  height: 100%;
+
+  background-color: var(--magenta_void);
+  color: var(--magenta_light);
+  filter: drop-shadow(1px 0 4px black);
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+  
+  
+  @media (min-width: 480px) {
+    width: 20%;
+  }
+
+  @media (min-width: 768px) {
+    width: 25%;
+  }
+
+  @media (min-width: 1080px) {
+    width: 250px;
+  }
+
+  .hideSidebarBtn {
+    position: absolute;
+    right: -1.5rem;
+    background-color: var(--magenta_void);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .logo {
+    font-family: serif;
+    font-weight: 700;
+    color: var(--green_med);
+  }
+
+  .userName {
+    font-family: serif;
+    font-weight: 700;
+
+    .logoutBtn {
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+  }
+
+  .listTitle {
+    font-size: 0.8rem;
+    border-bottom: 2px solid var(--magenta_light);
+
+    .createPlanBtn {
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+  }
+
+  button {
+    &:not(.createPlanBtn) {
+      font-size: 0;
+    }
+
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+.sideBar.hidden {
+  width: 2rem;
+  padding: 0;
+  
+  button {
+    margin: 0.5rem 0;
+  }
+
+  .hideSidebarBtn {
+    position: unset;
+  }
+}
+

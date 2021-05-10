@@ -46,7 +46,7 @@ export default function LoginPage() {
   }
 
   return (
-    <>
+    <section className={styles.loginContainer}>
       <h1 className={styles.hero}>TokenCal</h1>
 
       <form method="POST" className={styles.authForm}>  
@@ -117,6 +117,6 @@ export default function LoginPage() {
           <button type="button" onClick={() => setSignup(true)}>Registrar</button>
         </p>
       }
-    </>
+    </section>
   );
 }

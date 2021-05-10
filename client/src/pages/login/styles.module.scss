@@ -1,104 +1,109 @@
-.hero {
-  font-size: 4rem;
-  font-family: serif;
-  text-align: center;
-  color: var(--green_med);
+.loginContainer {
+  flex: 1;
 
-  animation: fadeInFromAbove 800ms ease forwards;
-}
-
-.authForm {
-  display: grid;
-  grid-template: min-content / min-content max-content;
-  gap: 0.5rem;
-
-  width: max-content;
-  padding: 1rem;
-  margin: 0 auto;
-  border: 1px solid var(--gray_subtle);
-  border-radius: 2px;
-
-  color: var(--whiteplum);
-
-  animation: fadeInFromBelow 500ms ease forwards;
-
-  .error {
-    position: absolute;
-    z-index: 10;
-    top: -2rem;
-
-    width: 100%;
-    padding: 0.5rem;
-    margin: 0;
-    box-sizing: border-box;
-
-    background-color: var(--magenta_med);
-    border-radius: 2px;
+  .hero {
+    font-size: 4rem;
+    font-family: serif;
     text-align: center;
-    color: var(--lelele);
+    color: var(--green_med);
 
-    animation: fadeIn 200ms ease forwards;
+    animation: fadeInFromAbove 800ms ease forwards;
   }
 
-  label {
-    padding: 0.5rem;
-    border: 2px solid var(--magenta_med);
-    border-radius: 5px;
-    text-align: center;
+  .authForm {
+    display: grid;
+    grid-template: min-content / min-content max-content;
+    gap: 0.5rem;
 
-    animation: fadeInFromBelow 500ms ease forwards;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    padding: 0.5rem;
-    border: none;
+    width: max-content;
+    padding: 1rem;
+    margin: 0 auto;
+    border: 1px solid var(--gray_subtle);
     border-radius: 2px;
-    font-size: 1rem;
-    max-width: 30vw;
 
-    background-color: var(--gray_subtle);
     color: var(--whiteplum);
 
     animation: fadeInFromBelow 500ms ease forwards;
 
-    &:invalid {
-      // add some icon
+    .error {
+      position: absolute;
+      z-index: 10;
+      top: -2rem;
+
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0;
+      box-sizing: border-box;
+
       background-color: var(--magenta_med);
+      border-radius: 2px;
+      text-align: center;
+      color: var(--lelele);
+
+      animation: fadeIn 200ms ease forwards;
+    }
+
+    label {
+      padding: 0.5rem;
+      border: 2px solid var(--magenta_med);
+      border-radius: 5px;
+      text-align: center;
+
+      animation: fadeInFromBelow 500ms ease forwards;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      padding: 0.5rem;
+      border: none;
+      border-radius: 2px;
+      font-size: 1rem;
+      max-width: 30vw;
+
+      background-color: var(--gray_subtle);
+      color: var(--whiteplum);
+
+      animation: fadeInFromBelow 500ms ease forwards;
+
+      &:invalid {
+        // add some icon
+        background-color: var(--magenta_med);
+      }
+    }
+
+    button {
+      grid-column: 1 / -1;
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 2px;
+      font-size: 1rem;
+
+      background-color: var(--green_light);
+      color: var(--green_void);
+
+      &:hover {
+        background-color: var(--green_med);
+      }
     }
   }
 
-  button {
-    grid-column: 1 / -1;
+  .authHint {
     width: 100%;
-    padding: 0.5rem;
-    border-radius: 2px;
-    font-size: 1rem;
+    text-align: center;
+    color: var(--gray_lesssubtle);
 
-    background-color: var(--green_light);
-    color: var(--green_void);
+    opacity: 0;
+    animation: fadeInFromBelow 500ms ease forwards 200ms;
 
-    &:hover {
-      background-color: var(--green_med);
-    }
-  }
-}
+    button {
+      color: var(--green_light);
+      font-size: 1rem;
+      margin-left: 0.5rem;
 
-.authHint {
-  width: 100%;
-  text-align: center;
-  color: var(--gray_lesssubtle);
-
-  opacity: 0;
-  animation: fadeInFromBelow 500ms ease forwards 200ms;
-
-  button {
-    color: var(--green_light);
-    font-size: 1rem;
-
-    &:hover {
-      color: var(--green_med);
+      &:hover {
+        color: var(--green_med);
+      }
     }
   }
 }

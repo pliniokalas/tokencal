@@ -26,10 +26,14 @@ button {
   border: none;
   font-weight: 700;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .App {
   display: flex;
-  flex-direction: column;
   height: 100vh;
+}
+
+li {
+  list-style-type: none;
 }

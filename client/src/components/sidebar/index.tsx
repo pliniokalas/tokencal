@@ -19,7 +19,13 @@ export default function SideBar() {
   );
 }
 
-function SideBarOpen(props) {
+type SidebarProps = {
+  toggle: () => void,
+  userName?: string,
+  planList?: Array<string>
+}
+
+function SideBarOpen(props: SidebarProps) {
   const { toggle, userName, planList } = props;
 
   return (
@@ -54,7 +60,7 @@ function SideBarOpen(props) {
       </p>
 
       <ul className={styles.planList}>
-        { planList.map((item) => 
+        { planList?.map((item) => 
         <li key={item}>
           <button
             type="button"
@@ -70,7 +76,7 @@ function SideBarOpen(props) {
   )
 }
 
-function SideBarClosed(props) {
+function SideBarClosed(props: SidebarProps) {
   const { toggle } = props;
 
   return (

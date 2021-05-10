@@ -4,16 +4,20 @@ import { useState, useEffect, useContext, createContext } from "react";
 
 const NavContext = createContext({ 
   pathname: "", 
-  navigate: (pathname: string): void => {} 
+  navigate: (pathname: string): void => {},
 });
 
 //================================================== 
 
-function NavProvider({ children }: { children: any }) {
+type NavProps = {
+  children: React.ReactNode,
+}
+
+function NavProvider({ children }: NavProps) {
   const [pathname, setPathname] = useState(window.location.pathname);
 
   function navigate(pathname: string): void {
-    setPathname(window.location.pathname);
+    setPathname(pathname);
     window.history.pushState(null, "", pathname);
   }
 
@@ -40,7 +44,7 @@ function NavProvider({ children }: { children: any }) {
 
 type RouteProps = {
   children: React.ReactNode,
-  href: string
+  href: string,
 }
 
 function Route({ children, href }: RouteProps): any {

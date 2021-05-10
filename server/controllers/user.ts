@@ -19,16 +19,17 @@ type RegisterBody = {
 
 export async function register(req: { body: RegisterBody }, res: any) {
   const { name, email, password } = req.body;
-  
-  const newUser = { 
-    id: `user-${email}-${+(new Date())}`,
-    name,
-    email,
-    password: await bcrypt.hash(password, 10), 
-    planList: [], 
-  }
+  console.log(req.body);
 
   try {
+    const newUser = { 
+      id: `user-${email}-${+(new Date())}`,
+      name,
+      email,
+      password: await bcrypt.hash(password, 10), 
+      planList: [], 
+    }
+
     await db.create("user", newUser);
     return res.status(200).json({ name });
   } catch (error) {
@@ -61,6 +62,7 @@ export async function login(req: { body: LoginBody }, res: any) {
     return res.status(200).json({ 
       planList: user.planList, 
       plans,
+      name: user.name,
       userId: user._id,
       token
     });

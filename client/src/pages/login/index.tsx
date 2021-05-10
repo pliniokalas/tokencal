@@ -1,8 +1,21 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
+import { NavContext } from "../../utils/routing";
 
 import styles from "./styles.module.scss";
 
-export default function LoginPage() {
+// ================================================== 
+
+const API_URL = "http://localhost:8000";
+
+type LoginProps = { 
+  login: () => void,
+  isAuth: boolean
+}
+
+export default function LoginPage(props: LoginProps) {
+  const { login, isAuth } = props;
+  const nav = useContext(NavContext);
+
   const [signup, setSignup] = useState(false);
 
   const [name, setName] = useState("");
@@ -45,11 +58,42 @@ export default function LoginPage() {
     }
   }
 
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+    const mode = signup ? "signup" : "login";
+
+    const resp = await fetch(`${API_URL}/${mode}`, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const data = await resp.json();
+    sessionStorage.setItem("auth", "true");
+    sessionStorage.setItem("token", data.token);
+    sessionStorage.setItem("user", JSON.stringify({
+      name: data.name,
+      plans: data.plans,
+      planList: data.planList,
+    }));
+
+    // redirect
+    if (resp.ok) {
+      login();
+    }
+  }
+
+  useEffect(() => {
+    if (isAuth) {
+      nav.navigate("/home");
+    }
+  },[isAuth]);
+
   return (
     <section className={styles.loginContainer}>
       <h1 className={styles.hero}>TokenCal</h1>
 
-      <form method="POST" className={styles.authForm}>  
+      <form className={styles.authForm} onKeyDown={(e) => e.code === "Enter" && handleSubmit(e)}>  
         { errorMsg && <p className={styles.error}>{errorMsg}</p> }
 
         { signup 
@@ -99,10 +143,9 @@ export default function LoginPage() {
           </>
         }
 
-        { signup 
-            ? <button type="submit" formAction="/register">Registrar</button>
-            : <button type="submit" formAction="/login">Registrar</button>
-        }
+        <button type="button" onClick={handleSubmit}>
+          { signup ? "Registrar" : "Entrar" }
+        </button>
       </form>
 
       { signup

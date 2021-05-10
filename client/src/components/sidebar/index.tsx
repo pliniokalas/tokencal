@@ -1,32 +1,62 @@
 import { useState } from "react";
 import styles from "./styles.module.scss";
 
-export default function SideBar() {
+type Plan = {
+  name: string,
+  start: Date,
+  end: Date
+}
+
+type SidebarProps = {
+  logout: () => void,
+  addPlan: () => void,
+  user: {
+    name: string,
+    plans: [Plan],
+    planList: [string]
+  }
+}
+
+export default function SideBar(props: SidebarProps) {
+  const { user, logout, addPlan } = props;
   const [isVisible, setIsVisible] = useState(true);
-  const userName = "Plinio";
 
   return (
     <section className={`${styles.sideBar} ${!isVisible ? styles.hidden : ""}`}>
       { isVisible
         ? <SideBarOpen 
           toggle={() => setIsVisible((prev: boolean) => !prev)} 
-          userName={userName}
-          planList={[]}
+          logout={logout}
+          addPlan={addPlan}
+          userName={user.name}
+          planList={user.planList}
         />
-        : <SideBarClosed toggle={() => setIsVisible((prev: boolean) => !prev)} />
+        : <SideBarClosed 
+          toggle={() => setIsVisible((prev: boolean) => !prev)} 
+          logout={logout}
+          addPlan={addPlan}
+        />
       }
     </section>
   );
 }
 
-type SidebarProps = {
+type SidebarPropsT = {
   toggle: () => void,
   userName?: string,
-  planList?: Array<string>
+  planList?: Array<string>,
+  logout: () => void,
+  addPlan: () => void
 }
 
-function SideBarOpen(props: SidebarProps) {
-  const { toggle, userName, planList } = props;
+function SideBarOpen(props: SidebarPropsT) {
+  const { 
+    toggle, 
+    userName, 
+    planList,
+    logout,
+    addPlan
+  } = props;
 
   return (
     <>
@@ -42,7 +72,7 @@ function SideBarOpen(props: SidebarProps) {
       <p className={styles.userName}>{userName}
         <button 
           type="button"
-          onClick={() => {}}
+          onClick={logout}
           className={styles.logoutBtn}
         >
           <img src={"./assets/logout.svg"} alt="Sair" />
@@ -52,7 +82,7 @@ function SideBarOpen(props: SidebarProps) {
       <p className={styles.listTitle}>Esse mês
         <button
           type="button"
-          onClick={() => {}}
+          onClick={addPlan}
           className={styles.createPlanBtn}
         >
           <img src={"./assets/plus.svg"} alt="Novo evento" />
@@ -76,8 +106,8 @@ function SideBarOpen(props: SidebarProps) {
   )
 }
 
-function SideBarClosed(props: SidebarProps) {
-  const { toggle } = props;
+function SideBarClosed(props: SidebarPropsT) {
+  const { toggle, logout, addPlan } = props;
 
   return (
     <>
@@ -91,7 +121,7 @@ function SideBarClosed(props: SidebarProps) {
 
       <button 
         type="button"
-        onClick={() => {}}
+        onClick={logout}
         className={styles.logoutBtn}
       >
         <img src={"./assets/logout.svg"} alt="Sair" />
@@ -99,7 +129,7 @@ function SideBarClosed(props: SidebarProps) {
 
       <button
         type="button"
-        onClick={() => {}}
+        onClick={addPlan}
         className={styles.createPlanBtn}
       >
         <img src={"./assets/plus.svg"} alt="Novo evento" />

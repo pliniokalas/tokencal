@@ -88,7 +88,7 @@ export default function LoginPage(props: LoginProps) {
     if (isAuth) {
       nav.navigate("/home");
     }
-  },[isAuth]);
+  },[isAuth]); /* eslint-disable-line */
 
   return (
     <section className={styles.loginContainer}>

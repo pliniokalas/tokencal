@@ -1,24 +1,13 @@
 import { useState } from "react";
 import styles from "./styles.module.scss";
 
-type Plan = {
-  name: string,
-  start: Date,
-  end: Date
-}
-
 type SidebarProps = {
   logout: () => void,
   addPlan: () => void,
-  user: {
-    name: string,
-    plans: [Plan],
-    planList: [string]
-  }
 }
 
 export default function SideBar(props: SidebarProps) {
-  const { user, logout, addPlan } = props;
+  const { logout, addPlan } = props;
   const [isVisible, setIsVisible] = useState(true);
 
   return (
@@ -28,8 +17,6 @@ export default function SideBar(props: SidebarProps) {
           toggle={() => setIsVisible((prev: boolean) => !prev)} 
           logout={logout}
           addPlan={addPlan}
-          userName={user.name}
-          planList={user.planList}
         />
         : <SideBarClosed 
           toggle={() => setIsVisible((prev: boolean) => !prev)} 
@@ -43,20 +30,13 @@ export default function SideBar(props: SidebarProps) {
 
 type SidebarPropsT = {
   toggle: () => void,
-  userName?: string,
-  planList?: Array<string>,
   logout: () => void,
   addPlan: () => void
 }
 
 function SideBarOpen(props: SidebarPropsT) {
-  const { 
-    toggle, 
-    userName, 
-    planList,
-    logout,
-    addPlan
-  } = props;
+  const { toggle, logout, addPlan } = props;
+  const user = JSON.parse(sessionStorage.getItem("user") as string);
 
   return (
     <>
@@ -69,7 +49,7 @@ function SideBarOpen(props: SidebarPropsT) {
       </button>
 
       <p className={styles.logo}>TokenCal</p>
-      <p className={styles.userName}>{userName}
+      <p className={styles.userName}>{user.name}
         <button 
           type="button"
           onClick={logout}
@@ -90,7 +70,7 @@ function SideBarOpen(props: SidebarPropsT) {
       </p>
 
       <ul className={styles.planList}>
-        { planList?.map((item) => 
+        { user.planList.map((item: any) => 
         <li key={item}>
           <button
             type="button"

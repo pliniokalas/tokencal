@@ -45,15 +45,15 @@ export default function Details(props: DetailsProps) {
     const user = JSON.parse(sessionStorage.getItem("user") as string);
 
     const body = JSON.stringify({
-      planList: user?.planList, 
-      userId: user?.id, 
+      planList: user.planList, 
+      userId: user.id, 
       name, 
       desc, 
       start, 
       end
     });
 
-    await fetch(`${API_URL}/plan`, {
+    const resp = await fetch(`${API_URL}/plan`, {
       method: "POST",
       headers: { 
         'Authorization': 'Bearer: ' + sessionStorage.getItem("token"),
@@ -61,6 +61,14 @@ export default function Details(props: DetailsProps) {
       },
       body
     });
+
+    // get the id created in the DB
+    if (resp.ok) {
+      const data = await resp.json();
+      user.planList = data.planList;
+      user.plans.push({ name, desc, start, end });
+      sessionStorage.setItem("user", JSON.stringify(user));
+    }
 
     close();
   }
@@ -105,7 +113,7 @@ export default function Details(props: DetailsProps) {
           onClick={close}
           className={styles.closeBtn}
         >
-          <img src={"./assets/x.svg"} />
+          <img src={"./assets/x.svg"} /> {/* eslint-disable-line */}
           Cancelar
         </button>
         <button
@@ -113,7 +121,7 @@ export default function Details(props: DetailsProps) {
           onClick={handleSubmit}
           className={styles.saveBtn}
         >
-          <img src={"./assets/save.svg"} />
+          <img src={"./assets/save.svg"} /> {/* eslint-disable-line */}
           Salvar
         </button>
       </menu>

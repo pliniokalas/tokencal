@@ -5,7 +5,7 @@ import { User, Plan } from "./models";
 // ==================================================  
 
 type DBObj = {
-  id: string,
+  id?: string,
   name?: string,
   email?: string,
   planList?: Array<string>,
@@ -56,7 +56,7 @@ async function create(schema: string, data: DBObj) {
 
 async function update(schema: string, data: DBObj) {
   if (schema === "user") {
-    return await User.findOneAndUpdate({ id: data.id }, data, { runValidators: true });
+    return await User.findOneAndUpdate({ _id: data.id }, data, { runValidators: true });
   }
 
   if (schema === "plan") {

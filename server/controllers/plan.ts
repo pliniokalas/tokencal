@@ -22,15 +22,17 @@ export async function createPlan(req: { body: CreateBody }, res: any) {
     end
   };
 
+  planList.push(newPlan.id);
+
   const user = {
     id: userId,
-    planList: planList.concat(newPlan.id)
+    planList
   };
 
   try {
     await db.update("user", user);
     await db.create("plan", newPlan);
-    return res.status(201).end();
+    return res.status(201).json({ planList });
 
   } catch (error) {
     return res.status(409).json({ error: error.message });

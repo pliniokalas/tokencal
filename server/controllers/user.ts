@@ -19,7 +19,6 @@ type RegisterBody = {
 
 export async function register(req: { body: RegisterBody }, res: any) {
   const { name, email, password } = req.body;
-  console.log(req.body);
 
   try {
     const newUser = { 
@@ -31,7 +30,8 @@ export async function register(req: { body: RegisterBody }, res: any) {
     }
 
     await db.create("user", newUser);
-    return res.status(200).json({ name });
+    login({ body: { email, password } }, res);
+    // return res.status(200).json({ plans: [], planList: [], userId: resp._id });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

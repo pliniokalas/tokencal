@@ -18,8 +18,6 @@ export default function HomePage(props: HomeProps) {
 
   const [planWindow, setPlanWindow] = useState(false);
 
-  const user = JSON.parse(sessionStorage.getItem("user") as string);
-
   function handleLogout() {
     sessionStorage.setItem("user", "");
     sessionStorage.setItem("auth", "false");
@@ -37,14 +35,13 @@ export default function HomePage(props: HomeProps) {
     if (!isAuth) {
       nav.navigate("/");
     }
-  },[isAuth]);
+  },[isAuth]); /* eslint-disable-line */
 
   return (
     <>
       <SideBar 
         logout={handleLogout} 
         addPlan={handleAddPlan} 
-        user={user} 
       /> 
       <Calendar />
       { planWindow && <Details close={() => setPlanWindow(false)} /> }

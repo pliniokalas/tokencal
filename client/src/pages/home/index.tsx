@@ -7,6 +7,16 @@ import Details from "../../components/details/index";
 
 // import styles from "./styles.module.scss";
 
+//================================================== 
+
+type Plan = {
+    id: string,
+    name: string,
+    desc: string,
+    start: Date,
+    end: Date
+}
+
 type HomeProps = {
   isAuth: boolean,
   logout: () => void,
@@ -16,7 +26,7 @@ export default function HomePage(props: HomeProps) {
   const { isAuth, logout } = props;
   const nav = useContext(NavContext);
 
-  const [planWindow, setPlanWindow] = useState(false);
+  const [details, setDetails] = useState({ show: false, data: undefined as Plan | undefined });
 
   function handleLogout() {
     sessionStorage.setItem("user", "");
@@ -27,8 +37,8 @@ export default function HomePage(props: HomeProps) {
     nav.navigate("/");
   }
 
-  function handleAddPlan() {
-    setPlanWindow(true);
+  function handleDetails(data?: Plan) {
+    setDetails({ show: true, data: data });
   }
 
   useEffect(() => {
@@ -41,10 +51,15 @@ export default function HomePage(props: HomeProps) {
     <>
       <SideBar 
         logout={handleLogout} 
-        addPlan={handleAddPlan} 
+        openDetails={handleDetails} 
       /> 
       <Calendar />
-      { planWindow && <Details close={() => setPlanWindow(false)} /> }
+      { details.show 
+        && <Details 
+          close={() => setDetails({ show: false, data: undefined })} 
+          data={details.data}
+        />
+      }
     </>
   );
 }

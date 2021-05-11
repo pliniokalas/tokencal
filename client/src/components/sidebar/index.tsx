@@ -1,13 +1,23 @@
 import { useState } from "react";
 import styles from "./styles.module.scss";
 
+// ================================================== 
+
+type Plan = {
+    id: string,
+    name: string,
+    desc: string,
+    start: Date,
+    end: Date
+}
+
 type SidebarProps = {
   logout: () => void,
-  addPlan: () => void,
+  openDetails: (data?: Plan) => void,
 }
 
 export default function SideBar(props: SidebarProps) {
-  const { logout, addPlan } = props;
+  const { logout, openDetails } = props;
   const [isVisible, setIsVisible] = useState(true);
 
   return (
@@ -16,26 +26,28 @@ export default function SideBar(props: SidebarProps) {
         ? <SideBarOpen 
           toggle={() => setIsVisible((prev: boolean) => !prev)} 
           logout={logout}
-          addPlan={addPlan}
+          openDetails={openDetails}
         />
         : <SideBarClosed 
           toggle={() => setIsVisible((prev: boolean) => !prev)} 
           logout={logout}
-          addPlan={addPlan}
+          openDetails={openDetails}
         />
       }
     </section>
   );
 }
 
+// ================================================== 
+
 type SidebarPropsT = {
   toggle: () => void,
   logout: () => void,
-  addPlan: () => void
+  openDetails: (data?: Plan) => void
 }
 
 function SideBarOpen(props: SidebarPropsT) {
-  const { toggle, logout, addPlan } = props;
+  const { toggle, logout, openDetails } = props;
   const user = JSON.parse(sessionStorage.getItem("user") as string);
 
   return (
@@ -62,7 +74,7 @@ function SideBarOpen(props: SidebarPropsT) {
       <p className={styles.listTitle}>Esse mês
         <button
           type="button"
-          onClick={addPlan}
+          onClick={() => openDetails()}
           className={styles.createPlanBtn}
         >
           <img src={"./assets/plus.svg"} alt="Novo evento" />
@@ -70,24 +82,26 @@ function SideBarOpen(props: SidebarPropsT) {
       </p>
 
       <ul className={styles.planList}>
-        { user.planList.map((item: any) => 
-        <li key={item}>
-          <button
-            type="button"
-            className={styles.planBtn}
-            onClick={() => {}}
-          >
-            {item}
-          </button>
-        </li>)
+        { user.plans.map((item: Plan) =>
+          <li key={item.id}>
+            <button
+              type="button"
+              className={styles.planBtn}
+              onClick={() => openDetails(item)}
+            >
+              {item.name}
+            </button>
+          </li>)
         }
       </ul>
     </>
   )
 }
 
+// ================================================== 
+
 function SideBarClosed(props: SidebarPropsT) {
-  const { toggle, logout, addPlan } = props;
+  const { toggle, logout, openDetails } = props;
 
   return (
     <>
@@ -109,7 +123,7 @@ function SideBarClosed(props: SidebarPropsT) {
 
       <button
         type="button"
-        onClick={addPlan}
+        onClick={() => openDetails()}
         className={styles.createPlanBtn}
       >
         <img src={"./assets/plus.svg"} alt="Novo evento" />

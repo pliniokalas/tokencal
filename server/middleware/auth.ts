@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../secret";
 
+// ================================================== 
+
 export async function auth(req: any, res: any, next: any) {
   try {
     const authHeader = req.headers.authorization;

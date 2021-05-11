@@ -1,11 +1,10 @@
 import express from "express";
-import { getLanding, register, login } from "../controllers/user";
+import { register, login } from "../controllers/user";
 
 // ================================================== 
 
 const router = express.Router();
 
-router.get("/", getLanding);
 router.post("/signup", register);
 router.post("/login", login);
 

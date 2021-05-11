@@ -3,7 +3,6 @@ import cors from "cors";
 
 import { db } from "./database/controller";
 
-import homeRoutes from "./routes/home";
 import planRoutes from "./routes/plan";
 import userRoutes from "./routes/user";
 
@@ -18,7 +17,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/", userRoutes);
-app.use("/home", homeRoutes);
 app.use("/plan", planRoutes);
 
 // ================================================== 

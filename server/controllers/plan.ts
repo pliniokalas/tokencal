@@ -39,6 +39,8 @@ export async function createPlan(req: { body: CreateBody }, res: any) {
   }
 }
 
+// ================================================== 
+
 type TPlan = {
   id: string,
   name: string,
@@ -56,6 +58,8 @@ export async function updatePlan(req: { body: TPlan }, res: any) {
     return res.status(409).json({ error: error.message });
   }
 }
+
+// ================================================== 
 
 type DeleteBody = {
   planId: string,

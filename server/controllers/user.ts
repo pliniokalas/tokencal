@@ -7,10 +7,6 @@ import { IUser } from "../database/models";
 
 // ================================================== 
 
-export function getLanding(req: any, res: any) {
-  return res.status(200).end();
-}
-
 type RegisterBody = {
   name: string,
   email: string,
@@ -36,6 +32,8 @@ export async function register(req: { body: RegisterBody }, res: any) {
     return res.status(500).json({ error: error.message });
   }
 }
+
+// ================================================== 
 
 type LoginBody = {
   email: string,

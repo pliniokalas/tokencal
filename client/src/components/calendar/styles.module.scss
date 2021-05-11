@@ -35,7 +35,7 @@
   .dateContainer {
     flex: 1;
     display: grid;
-    grid-template: min-content repeat(6, auto) / repeat(7, auto);
+    grid-template: min-content repeat(6, 1fr) / repeat(7, 1fr);
 
     padding: 1.5rem;
 
@@ -55,6 +55,7 @@
       border: 1px solid var(--gray_subtle);
 
       text-align: center;
+      overflow: hidden;
 
       .dateLabel {
         width: min-content;
@@ -71,6 +72,21 @@
           color: var(--magenta_med);
           font-weight: 700;
         }
+      }
+
+      li:not(.dateLabel) {
+        width: 100%;
+        min-width: max-content;
+        margin: 2px 0;
+        padding: 2px;
+
+        align-self: flex-start;
+        font-size: 0.7rem;
+        border-radius: 2px;
+
+        box-sizing: border-box;
+        color: var(--whiteplum);
+        background-color: var(--magenta_dark);
       }
     }
   }

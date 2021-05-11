@@ -26,7 +26,8 @@ export default function Calendar() {
   const [month, setMonth] = useState(today.getMonth());
   const [year, setYear] = useState(today.getFullYear());
 
-  const page = buildCalendarPage(year, month);
+  const user = JSON.parse(sessionStorage.getItem("user") as string);
+  const page = buildCalendarPage(year, month, user.plans);
 
   return (
     <section className={styles.calendarContainer}>
@@ -59,6 +60,7 @@ export default function Calendar() {
       { page[1].map((entry, index) => (
         <ul className={styles.day} key={entry.date + "" + index}>
           <li className={`${styles.dateLabel} ${entry.today && styles.today}`}>{entry.date}</li>
+          { entry.plans?.map((item) => <li key={item.id}>{item.name}</li>) }
         </ul>
         )) 
       }
@@ -130,7 +132,36 @@ function CalendarHeader(props: HeaderProps) {
 
 // ================================================== 
 
-function buildCalendarPage(year: number, month: number) {
+type Plan = {
+  id: string,
+  name: string,
+  desc: string,
+  start: string,
+  end: string
+}
+
+function indexedByDate(year: number, month: number, plans: Array<Plan>) {
+  const indexed: any = {};
+
+  for (let item of plans) {
+    const [y, mon, d] = item.start.split("-");
+    const m = +mon-1;
+
+    if (+y !== year || +m !== month) { 
+      continue;
+    }
+
+    if (!indexed[d]) {
+      indexed[d] = [];
+    }
+
+    indexed[d].push(item);
+  }
+
+  return indexed;
+}
+
+function buildCalendarPage(year: number, month: number, plans: Array<Plan>) {
   const today = new Date();
 
   // current month
@@ -150,6 +181,8 @@ function buildCalendarPage(year: number, month: number) {
   const nextStart = new Date(year, month + 1, 1);
   const nextEnd = new Date(year, month + 1, headBlocks); 
 
+  const currentPlans = indexedByDate(year, month, plans);
+
   const tail = [];
   for (let i=lastStart.getDate(); i<=lastEnd.getDate(); i++) {
     tail.push({ date: i, plans: [], today: false });
@@ -157,7 +190,11 @@ function buildCalendarPage(year: number, month: number) {
 
   const curr = [];
   for (let i=monthStart.getDate(); i<=monthEnd.getDate(); i++) {
-    curr.push({ date: i, plans: [], today: month === today.getMonth() && i === today.getDate() });
+    curr.push({ 
+      date: i, 
+      plans: currentPlans[i], 
+      today: month === today.getMonth() && i === today.getDate() 
+    });
   }
 
   const head = [];

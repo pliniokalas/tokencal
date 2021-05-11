@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { NavContext } from "../../utils/routing";
+import { DateProvider } from "../../utils/date-context";
 
 import SideBar from "../../components/sidebar/index";
 import Calendar from "../../components/calendar/index";
@@ -24,9 +25,14 @@ type HomeProps = {
 
 export default function HomePage(props: HomeProps) {
   const { isAuth, logout } = props;
-  const nav = useContext(NavContext);
 
   const [details, setDetails] = useState({ show: false, data: undefined as Plan | undefined });
+
+  function handleDetails(data?: Plan) {
+    setDetails({ show: true, data: data });
+  }
+
+  const nav = useContext(NavContext);
 
   function handleLogout() {
     sessionStorage.setItem("user", "");
@@ -37,10 +43,6 @@ export default function HomePage(props: HomeProps) {
     nav.navigate("/");
   }
 
-  function handleDetails(data?: Plan) {
-    setDetails({ show: true, data: data });
-  }
-
   useEffect(() => {
     if (!isAuth) {
       nav.navigate("/");
@@ -48,19 +50,23 @@ export default function HomePage(props: HomeProps) {
   },[isAuth]); /* eslint-disable-line */
 
   return (
-    <>
+    <DateProvider>
+
       <SideBar 
         logout={handleLogout} 
         openDetails={handleDetails} 
       /> 
+
       <Calendar />
+
       { details.show 
         && <Details 
           close={() => setDetails({ show: false, data: undefined })} 
           data={details.data}
         />
       }
-    </>
+
+    </DateProvider>
   );
 }
 

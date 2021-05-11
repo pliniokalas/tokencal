@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useDate } from "../../utils/date-context";
+import { indexedByDate } from "../../utils/indexed-by-date";
+
 import styles from "./styles.module.scss";
 
 // ================================================== 
@@ -50,6 +53,9 @@ function SideBarOpen(props: SidebarPropsT) {
   const { toggle, logout, openDetails } = props;
   const user = JSON.parse(sessionStorage.getItem("user") as string);
 
+  const { month, year } = useDate();
+  const currentPlans = Object.values(indexedByDate(year, month, user.plans));
+
   return (
     <>
       <button
@@ -82,7 +88,7 @@ function SideBarOpen(props: SidebarPropsT) {
       </p>
 
       <ul className={styles.planList}>
-        { user.plans.map((item: Plan) =>
+        { currentPlans.flat().map((item: any) =>
           <li key={item.id}>
             <button
               type="button"

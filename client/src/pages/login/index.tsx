@@ -72,6 +72,7 @@ export default function LoginPage(props: LoginProps) {
     sessionStorage.setItem("auth", "true");
     sessionStorage.setItem("token", data.token);
     sessionStorage.setItem("user", JSON.stringify({
+      id: data.userId,
       name: data.name,
       plans: data.plans,
       planList: data.planList,

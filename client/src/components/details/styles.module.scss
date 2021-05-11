@@ -5,7 +5,7 @@
   transform: translate(-50%, -50%);
 
   display: grid;
-  grid-template: repeat(3, min-content) / repeat(2, min-content auto);
+  grid-template: repeat(4, min-content) / repeat(2, min-content auto);
   align-items: center;
   justify-items: center;
   gap: 0.5rem;
@@ -44,6 +44,17 @@
     border-radius: 2px;
     color: var(--magenta_light);
     background-color: var(--magenta_void);
+  }
+
+  textarea {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    background-color: var(--magenta_void);
+    border: none;
+    border-radius: 2px;
+    color: var(--magenta_light);
   }
 
   menu {

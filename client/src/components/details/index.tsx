@@ -16,35 +16,53 @@ export default function Details(props: DetailsProps) {
   const [name, setName] = useState("");
   const [start, setStart] = useState((new Date()).toISOString());
   const [end, setEnd] = useState(new Date().toISOString());
+  const [desc, setDesc] = useState("");
 
   function handleChange(e: any) {
     const field = e.target;
 
     switch(field.name) {
       case "name":
-      setName(field.value);
+        setName(field.value);
         break;
       case "start":
-      setStart(field.value);
+        setStart(field.value);
         break;
       case "end":
-      setEnd(field.value);
+        setEnd(field.value);
+        break;
+      case "desc":
+        setDesc(field.value);
         break;
       default:
-      break;
+        break;
     }
   }
 
   async function handleSubmit(e: any) {
     e.preventDefault();
 
-    const resp = await fetch(`${API_URL}/plan`, {
-      method: "POST",
-      headers: { },
-      body: JSON.stringify({ name, start, end })
+    const user = JSON.parse(sessionStorage.getItem("user") as string);
+
+    const body = JSON.stringify({
+      planList: user?.planList, 
+      userId: user?.id, 
+      name, 
+      desc, 
+      start, 
+      end
     });
 
-    console.log(resp.ok);
+    await fetch(`${API_URL}/plan`, {
+      method: "POST",
+      headers: { 
+        'Authorization': 'Bearer: ' + sessionStorage.getItem("token"),
+        'Content-Type': 'application/json' 
+      },
+      body
+    });
+
+    close();
   }
 
   return (
@@ -73,6 +91,13 @@ export default function Details(props: DetailsProps) {
           value={end}
           onChange={handleChange}
         />
+
+      <textarea
+        name="desc"
+        value={desc}
+        placeholder="descrição"
+        onChange={handleChange}
+      />
 
       <menu>
         <button

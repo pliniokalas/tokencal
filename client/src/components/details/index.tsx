@@ -24,12 +24,12 @@ export default function Details(props: DetailsProps) {
   const { close, data } = props;
 
   const user = JSON.parse(sessionStorage.getItem("user") as string);
-  const plan = data || {
-    id: undefined,
-    name: "",
-    desc: "",
-    start: new Date(),
-    end: new Date()
+  const plan = {
+    id: data?.id || undefined,
+    name: data?.name || "",
+    desc: data?.desc || "",
+    start: data ? new Date(data.start) : new Date(),
+    end: data ? new Date(data.end) : new Date()
   };
 
   const [name, setName] = useState(plan.name);

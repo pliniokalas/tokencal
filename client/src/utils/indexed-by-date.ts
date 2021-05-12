@@ -10,10 +10,13 @@ export function indexedByDate(year: number, month: number, plans: Array<Plan>) {
   const indexed: any = {};
 
   for (let item of plans) {
-    const [y, mon, d] = item.start.split("-");
-    const m = +mon-1;
+    const str = item.start.split("T")[0];
 
-    if (+y !== year || +m !== month) { 
+    const y = +str.split("-")[0];
+    const m = +str.split("-")[1] - 1;
+    const d = +str.split("-")[2];
+
+    if (y !== year || m !== month) { 
       continue;
     }
 

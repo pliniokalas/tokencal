@@ -1,3 +1,5 @@
+@use "../../global.scss";
+
 .detailsContainer {
   position: absolute;
   top: 50%;
@@ -14,6 +16,8 @@
 
   background-color: var(--magenta_med);
   color: var(--whiteplum);
+
+  animation: fadeInFromBellowB 300ms ease-out; 
 
   input[type="text"] {
     grid-column: 1 / -1;
@@ -35,9 +39,16 @@
     border-radius: 2px;
     font-size: 0.8rem;
     text-align: center;
+
+    &.filler {
+      grid-column: span 2; 
+      background-color: var(--magenta_dark);
+      border: none;
+    }
   }
 
-  input[type="date"] {
+  input[type="date"],
+  input[type="time"] {
     width: 100%;
     height: 100%;
     border: none;

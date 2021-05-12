@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { mergeDate } from "../../utils/merge-date";
 
 import styles from "./styles.module.scss";
 
 //================================================== 
 
 const API_URL = "http://localhost:8000";
+
+// ================================================== 
 
 type DetailsProps = {
   close: () => void,
@@ -16,17 +19,6 @@ type DetailsProps = {
     end: Date
   }
 }
-
-// freaking date parsing 
-const when = (val?: any) => {
-  const date = val ? (new Date(val)) : (new Date());
-  const y = date.getFullYear();
-  const m = (date.getMonth() + 1).toString().padStart(2, "0");
-  const d = date.getDate().toString().padStart(2, "0");
-  return `${y}-${m}-${d}`;
-}
-
-// ================================================== 
 
 export default function Details(props: DetailsProps) {
   const { close, data } = props;
@@ -42,29 +34,8 @@ export default function Details(props: DetailsProps) {
 
   const [name, setName] = useState(plan.name);
   const [desc, setDesc] = useState(plan.desc);
-  const [start, setStart] = useState(when(plan.start));
-  const [end, setEnd] = useState(when(plan.end));
-
-  function handleChange(e: any) {
-    const field = e.target;
-
-    switch(field.name) {
-      case "name":
-        setName(field.value);
-        break;
-      case "start":
-        setStart(field.value);
-        break;
-      case "end":
-        setEnd(field.value);
-        break;
-      case "desc":
-        setDesc(field.value);
-        break;
-      default:
-        break;
-    }
-  }
+  const [start, setStart] = useState(plan.start);
+  const [end, setEnd] = useState(plan.start);
 
   async function create() {
     const body = {
@@ -93,8 +64,6 @@ export default function Details(props: DetailsProps) {
       user.plans.push({ id, name, desc, start, end });
       sessionStorage.setItem("user", JSON.stringify(user));
     }
-
-    return resp;
   }
 
   async function update() {
@@ -143,31 +112,41 @@ export default function Details(props: DetailsProps) {
         placeholder="Nome do evento"
         value={name}
         type="text" 
-        onChange={handleChange} 
+        onChange={(e) => setName(e.target.value)} 
       />
 
+      <label htmlFor="date">Data</label>
+      <input
+        name="date"
+        type="date"
+        value={start.toISOString().substr(0, 10)}
+        onChange={(e) => setStart(mergeDate(e.target, start))}
+      />
+
+      <label className={styles.filler} />
+
       <label htmlFor="start">De</label>
-        <input
-          name="start"
-          type="date"
-          value={start}
-          onChange={handleChange}
-        />
-      
+      <input
+        name="start"
+        type="time"
+        defaultValue={start.toTimeString().substr(0, 5)}
+        onChange={(e) => setStart(mergeDate(e.target, start))}
+      />
+
 
       <label htmlFor="end">Até</label>
-        <input
-          name="end"
-          type="date"
-          value={end}
-          onChange={handleChange}
-        />
+      <input
+        name="end"
+        type="time"
+        defaultValue={end.toTimeString().substr(0, 5)}
+        onChange={(e) => setEnd(mergeDate(e.target, end))}
+      />
 
       <textarea
         name="desc"
         value={desc}
         placeholder="descrição"
-        onChange={handleChange}
+        onChange={(e) => setDesc(e.target.value)}
       />
 
       <menu>

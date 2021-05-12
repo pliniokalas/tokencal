@@ -64,3 +64,14 @@ li {
     transform: translateY(0);
   }
 }
+
+@keyframes fadeInFromBellowB {
+  from {
+    opacity: 0;
+    top: 55%;
+  }
+  to {
+    opacity: 1;
+    top: 50%;
+  }
+}
